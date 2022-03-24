@@ -1,3 +1,6 @@
+""" To find the longest consecutive increasing or decreasing subsequence
+      and its summation """
+
 sequence = list(map(int, input("enter space separated numbers: ").split()))
 len_list = len(sequence)
 
@@ -20,7 +23,7 @@ for i in range(len_list):  # updates long_conseq_incre_list
         long_conseq_incre_list = inner_list
 
 for i in range(len_list):  # updates long_conseq_decre_list
-    inner_list = []         #declaring inner_list in local scope
+    inner_list = []         # declaring inner_list in local scope
     for j in range(i, len_list - 1):
         if sequence[j] >= sequence[j + 1]:
             inner_list.append(sequence[j])
@@ -51,6 +54,5 @@ def sum_long_sequence(long_conseq_incre_list,
 
 
 print("long_conseq_incre_list: ", long_conseq_incre_list)
-print("long_conseq_decre_list: ", long_conseq_decre_list)
-print("sum of all the elements in the longest sequence: ",
+print("sum of elements: ",
       sum_long_sequence(long_conseq_incre_list, long_conseq_decre_list))
