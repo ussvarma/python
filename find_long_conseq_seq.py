@@ -46,8 +46,8 @@ def sum_long_sequence(long_conseq_incre_list,
     elif len(long_conseq_incre_list) > len(long_conseq_decre_list):
         return sum(long_conseq_incre_list)
     else:
-        if long_conseq_incre_list.index(long_conseq_incre_list[0]) < long_conseq_decre_list.index(
-                long_conseq_decre_list[0]):
+        if long_conseq_incre_list.index(long_conseq_incre_list[0]) \
+                < long_conseq_decre_list.index(long_conseq_decre_list[0]):
             return sum(long_conseq_incre_list)
         else:
             return sum(long_conseq_decre_list)
