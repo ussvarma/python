@@ -18,4 +18,5 @@ t2.start()
 # waits until both threads finish their task
 t1.join()
 t2.join()
+
 print("Done")
