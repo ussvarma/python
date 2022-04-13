@@ -1,10 +1,9 @@
+# importing libraries
 import smtplib
 from configparser import ConfigParser
 
 
-
-
-def Main():
+def main():
     file = "config.ini"
     config = ConfigParser()
     config.read(file)
@@ -13,8 +12,6 @@ def Main():
     cc_list = [config["email"]["cc"]]
     bcc_list = [config["email"]["bcc"]]
     from_address = config["email"]["from"]
-
-
 
     message_subject = config["email"]["subject"]
     message_text = config["email"]["text"]
@@ -26,8 +23,8 @@ def Main():
               + "\r\n" + message_text
 
     to_addresses_list = [to_address] + cc_list + bcc_list
-    server = smtplib.SMTP('smtp.gmail.com')      #simple mail transfer protocol
-    server.starttls()                            #for making secure connection
+    server = smtplib.SMTP('smtp.gmail.com')  # simple mail transfer protocol
+    server.starttls()  # for making secure connection
     server.login(config["login"]["user_name"], config["login"]["password"])
     server.set_debuglevel(1)
     server.sendmail(from_address, to_addresses_list, message)
@@ -35,4 +32,4 @@ def Main():
 
 
 if __name__ == '__main__':
-    Main()
+    main()
