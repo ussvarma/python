@@ -1,5 +1,6 @@
+# server socket
 import socket
-# import thread module
+# importing thread module
 from _thread import *
 import threading
 
@@ -9,6 +10,7 @@ lock = threading.Lock()
 # thread function
 def threaded(client):
     while True:
+        # Below function returns longest increasing/decreasing sequence
         def long_seq(seq):
             print(seq)
             l = list(map(int, seq.split()))
@@ -83,12 +85,10 @@ def main():
     host = ""
 
     # reverse a port on your computer
-    # in our case it is 12345 but it
-    # can be anything
     port = 12345
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind((host, port))
-    print("socket binded to port", port)
+    print("socket bound to port", port)
 
     # put the socket into listening mode
     s.listen(5)
