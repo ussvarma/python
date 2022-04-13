@@ -13,7 +13,6 @@ try:
     fun(3)
     fun(5)
 
-
 # multiple exceptions
 except ZeroDivisionError:
     print("ZeroDivisionError Occurred and Handled")
