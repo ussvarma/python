@@ -11,7 +11,6 @@ app.config['MYSQL_PASSWORD'] = 'p@ssw0rd'
 app.config['MYSQL_DB'] = 'company'
 mysql = MySQL(app)
 
-
 @app.route('/')
 def index():
     cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
