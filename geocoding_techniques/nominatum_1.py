@@ -1,4 +1,4 @@
-from geopy.geocoders import Nominatim
+from geopy.geocoders import Nominatim  # open source library
 
 # address we need to geocode
 loc = input("please enter the address")

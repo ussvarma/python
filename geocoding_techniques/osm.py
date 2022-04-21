@@ -1,4 +1,4 @@
-# geocoding_techniques using open street map (osm)
+# geocoding_techniques using open street map (osm) open source library
 import geocoder
 
 g = geocoder.osm(input("please enter address"), user_agent="my-task")
