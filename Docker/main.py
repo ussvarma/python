@@ -21,14 +21,16 @@ def db_connection():
 def index():
     conn = db_connection()
     cur = conn.cursor()
-    sql = """INSERT INTO tblemployee(name, department,phone) 
-                            VALUES (?,?,?)
-                        """
-
+    # cur.execute("""INSERT INTO tblemployee(name,email, department,phone)
+    #                         VALUES ("ussvarma","email","depart","phone")
+    #                     """)
+    # cur.execute("""DELETE FROM tblemployee
+    #             WHERE name="ussvarma" and email="email" and department="depart" and phone="phone";""")
     cur.execute("SELECT * FROM tblemployee ORDER BY id")
     employee = cur.fetchall()
     # print(employee)
     return render_template('index.html', employee=employee)
+
 
 # for adding new row
 @app.route("/ajax_add", methods=["POST", "GET"])
@@ -39,32 +41,36 @@ def ajax_add():
     if request.method == 'POST':
         # print("post working")
         txtname = request.form['txtname']
+        txtemail = request.form['txtemail']
         txtdepartment = request.form['txtdepartment']
         txtphone = request.form['txtphone']
         # print(txtname)
         if txtname == '':
             msg = 'Please Input name'
+        elif txtemail == "":
+            msg = "please input email"
         elif txtdepartment == '':
             msg = 'Please Input Department'
         elif txtphone == '':
             msg = 'Please Input Phone'
         else:
-            sql = "SELECT * from tblemployee where name like ?"
-            cur.execute(sql, [txtname])
+            sql = "SELECT * from tblemployee where email like ?"
+            cur.execute(sql, [txtemail])
             result = cur.fetchall()
             # print(result)
             if len(result) >= 1:
                 msg = "entered duplicated record"
             else:
-                sql = """INSERT INTO tblemployee(name, department,phone) 
-                            VALUES (?,?,?)
+                sql = """INSERT INTO tblemployee(name,email, department,phone) 
+                            VALUES (?,?,?,?)
                         """
                 cur.execute(sql,
-                            (txtname, txtdepartment, txtphone))
+                            (txtname, txtemail, txtdepartment, txtphone))
                 conn.commit()
                 cur.close()
                 msg = 'New record created successfully'
     return jsonify(msg)
+
 
 # for updating the record
 @app.route("/ajax_update", methods=["POST", "GET"])
@@ -75,15 +81,24 @@ def ajax_update():
     if request.method == 'POST':
         string = request.form['string']
         txtname = request.form['txtname']
+        txtemail= request.form['txtemail']
         txtdepartment = request.form['txtdepartment']
         txtphone = request.form['txtphone']
         # print(string)
-        cur.execute("UPDATE tblemployee SET name = ?, department = ?, phone = ? WHERE id = ? ",
-                    (txtname, txtdepartment, txtphone, string))
-        conn.commit()
-        cur.close()
-        msg = 'Record successfully Updated'
+        sql = "SELECT * from tblemployee where email like ?"
+        cur.execute(sql, [txtemail])
+        result = cur.fetchall()
+        # print(result)
+        if len(result) >= 1:
+            msg = "entered duplicated record"
+        else:
+            cur.execute("UPDATE tblemployee SET name = ?, email=?,department = ?, phone = ? WHERE id = ? ",
+                        (txtname, txtemail, txtdepartment, txtphone, string))
+            conn.commit()
+            cur.close()
+            msg = 'Record successfully Updated'
     return jsonify(msg)
+
 
 # for deleting the record
 @app.route("/ajax_delete", methods=["POST", "GET"])

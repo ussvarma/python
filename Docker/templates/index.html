@@ -16,11 +16,11 @@
   font-family: 'Open Sans', sans-serif;
  }
  .table-wrapper {
-  width: 700px;
-  margin: 30px auto;
-        background: #fff;
-        padding: 20px;
-        box-shadow: 0 1px 1px rgba(0,0,0,.05);
+<!--  width: 800px;-->
+    margin: 30px auto;
+    background: #fff;
+    padding: 10px;
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
     }
     .table-title {
         padding-bottom: 10px;
@@ -112,6 +112,7 @@
                 <thead>
                     <tr>
                         <th>Name</th>
+                        <th>Email</th>
                         <th>Department</th>
                         <th>Phone</th>
                         <th>Actions</th>
@@ -121,6 +122,7 @@
                     {% for row in employee %}
                     <tr>
                         <td>{{row.name}}</td>
+                        <td>{{row.email}}</td>
                         <td>{{row.department}}</td>
                         <td>{{row.phone}}</td>
                         <td>
@@ -138,12 +140,14 @@
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
     var actions = $("table td:last-child").html();
+
     // Append table with add row form on add new button click
     $(".add-new").click(function(){
         $(this).attr("disabled", "disabled");
         var index = $("table tbody tr:last-child").index();
         var row = '<tr>' +
             '<td><input type="text" class="form-control" name="name" id="txtname"></td>' +
+            '<td><input type="text" class="form-control" name="email" id="txtemail"></td>' +
             '<td><input type="text" class="form-control" name="department" id="txtdepartment"></td>' +
             '<td><input type="text" class="form-control" name="phone" id="txtphone"></td>' +
         '<td>' + actions + '</td>' +
@@ -167,9 +171,10 @@ $(document).ready(function(){
             }
         });
         var txtname = $("#txtname").val();
+        var txtemail = $("#txtemail").val();
         var txtdepartment = $("#txtdepartment").val();
         var txtphone = $("#txtphone").val();
-        $.post("/ajax_add", { txtname: txtname, txtdepartment: txtdepartment, txtphone: txtphone}, function(data) {
+        $.post("/ajax_add", { txtname: txtname, txtemail:txtemail,txtdepartment: txtdepartment, txtphone: txtphone}, function(data) {
             setTimeout(()=>{
                 location.reload();
             }, 2000);
@@ -203,9 +208,10 @@ $(document).ready(function(){
         var id = $(this).attr("id");
         var string = id;
         var txtname = $("#txtname").val();
+        var txtemail = $("#txtemail").val();
         var txtdepartment = $("#txtdepartment").val();
         var txtphone = $("#txtphone").val();
-        $.post("/ajax_update", { string: string,txtname: txtname, txtdepartment: txtdepartment, txtphone: txtphone}, function(data) {
+        $.post("/ajax_update", { string: string,txtname: txtname,txtemail:txtemail, txtdepartment: txtdepartment, txtphone: txtphone}, function(data) {
             $("#displaymessage").html(data);
             $("#displaymessage").show();
             setTimeout(()=>{
@@ -221,8 +227,10 @@ $(document).ready(function(){
             if (i=='0'){
                 var idname = 'txtname';
             }else if (i=='1'){
-                var idname = 'txtdepartment';
+                var idname = 'txtemail';
             }else if (i=='2'){
+                var idname = 'txtdepartment';
+            }else if (i=='3'){
                 var idname = 'txtphone';
             }else{}
             $(this).html('<input type="text" name="updaterec" id="' + idname + '" class="form-control" value="' + $(this).text() + '">');
