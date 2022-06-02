@@ -1,6 +1,5 @@
 def find_prime(num):
     """
-
     :param num:
     :return: prime numbers below given number
     """
