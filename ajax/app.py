@@ -4,19 +4,19 @@ from flask_mysqldb import MySQL, MySQLdb
 
 app = Flask(__name__)
 
-
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = 'p@ssw0rd'
 app.config['MYSQL_DB'] = 'company'
 mysql = MySQL(app)
 
+
 @app.route('/')
 def index():
     cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cur.execute("SELECT * FROM tblemployee ORDER BY id")
     employee = cur.fetchall()
-    # print(employee)
+    print(employee)
     return render_template('index.html', employee=employee)
 
 
@@ -77,4 +77,4 @@ def ajax_delete():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True,port=7000)
